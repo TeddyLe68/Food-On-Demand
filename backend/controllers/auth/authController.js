@@ -35,8 +35,7 @@ const loginUser = async (req, res) => {
 // register user
 const signupUser = async (req, res) => {
   try {
-    const { username, password, email, phoneNumber, deliveryAddress } =
-      req.body;
+    const { username, password, email, phoneNumber } = req.body;
     // check format email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -70,7 +69,6 @@ const signupUser = async (req, res) => {
       email: email,
       phoneNumber: phoneNumber,
       password: hashedPassword,
-      deliveryAddress: deliveryAddress,
     });
     if (newUser) {
       generateTokenAndSetCookie(newUser._id, res);
@@ -80,7 +78,6 @@ const signupUser = async (req, res) => {
         username: newUser.username,
         phoneNumber: newUser.phoneNumber,
         email: newUser.email,
-        deliveryAddress: newUser.deliveryAddress,
       });
     } else {
       res.status(400).json({ success: false, message: "Invalid user" });

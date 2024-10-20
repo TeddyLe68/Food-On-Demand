@@ -19,16 +19,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    deliveryAddress: {
-      street: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
-    },
     phoneNumber: {
       type: String,
       required: true,
       minlength: 10, // Minimum length for phone number
+      unique: true, // Ensures that the phone number is unique
     },
     orderHistory: [
       {
@@ -36,9 +31,9 @@ const userSchema = new mongoose.Schema(
         ref: "Order", // Reference to the Order model
       },
     ],
-    isAdmin: {
-      type: Boolean,
-      default: false, // By default, users are not admins
+    role: {
+      type: String,
+      default: "user",
     },
   },
   {

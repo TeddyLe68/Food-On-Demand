@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 
 //import routes
 import authRouter from "./routes/auth/authRoute.js";
-import cartRouter from "./routes/cartRoute.js";
+import cartRouter from "./routes/store/cartRoute.js";
 import adminProductRouter from "./routes/admin/productRoute.js";
 import adminOrderRouter from "./routes/admin/orderRoute.js";
 import categoryRouter from "./routes/admin/categoryRoute.js";
@@ -37,18 +37,16 @@ app.use(
   })
 );
 
-//call api
+//api admin routes
 app.use("/api/auth", authRouter);
-app.use("/api/admin/products", adminProductRouter);
 app.use("/api/admin/orders", adminOrderRouter);
-// app.use("/api/admin/categories", categoryRouter);
-app.use("/images", express.static("uploads"));
-app.use("/api/cart", cartRouter);
-// app.use("/api/order", orderRouter);
+app.use("/api/admin/products", adminProductRouter);
+app.use("/api/admin/categories", categoryRouter);
 
-app.get("/", (req, res) => {
-  res.send("API Working");
-});
+//api user routes
+app.use("/api/shop/cart", cartRouter);
+app.use("/images", express.static("uploads"));
+// app.use("/api/order", orderRouter);
 
 app.listen(PORT, () => {
   console.log(`Sever started on http://localhost:${PORT}`);
