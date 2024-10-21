@@ -10,6 +10,8 @@ import cartRouter from "./routes/store/cartRoute.js";
 import adminProductRouter from "./routes/admin/productRoute.js";
 import adminOrderRouter from "./routes/admin/orderRoute.js";
 import categoryRouter from "./routes/admin/categoryRoute.js";
+import ProductRouter from "./routes/store/productRoute.js";
+import addressRouter from "./routes/store/addressRoute.js";
 
 //app config
 dotenv.config();
@@ -44,7 +46,9 @@ app.use("/api/admin/products", adminProductRouter);
 app.use("/api/admin/categories", categoryRouter);
 
 //api user routes
-app.use("/api/shop/cart", cartRouter);
+app.use("/api/store/cart", cartRouter);
+app.use("/api/store/products", ProductRouter);
+app.use("/api/store/address", addressRouter);
 app.use("/images", express.static("uploads"));
 // app.use("/api/order", orderRouter);
 

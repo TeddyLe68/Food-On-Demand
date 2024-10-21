@@ -19,12 +19,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    phoneNumber: {
-      type: String,
-      required: true,
-      minlength: 10, // Minimum length for phone number
-      unique: true, // Ensures that the phone number is unique
-    },
     orderHistory: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -23,8 +23,6 @@ const loginUser = async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
-      phoneNumber: user.phoneNumber,
-      deliveryAddress: user.deliveryAddress,
     });
   } catch (error) {
     console.log("Error in login controller", error.message);
@@ -35,19 +33,13 @@ const loginUser = async (req, res) => {
 // register user
 const signupUser = async (req, res) => {
   try {
-    const { username, password, email, phoneNumber } = req.body;
+    const { username, password, email } = req.body;
     // check format email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ error: "Invalid email format" });
     }
     // check user exist or not
-    const checkPhoneNumberExist = await User.findOne({ phoneNumber });
-    if (checkPhoneNumberExist) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Phone number is already taken" });
-    }
     const checkEmailExist = await User.findOne({ email });
     if (checkEmailExist) {
       return res
@@ -67,7 +59,6 @@ const signupUser = async (req, res) => {
     const newUser = new User({
       username: username,
       email: email,
-      phoneNumber: phoneNumber,
       password: hashedPassword,
     });
     if (newUser) {
@@ -76,7 +67,6 @@ const signupUser = async (req, res) => {
       res.status(200).json({
         _id: newUser._id,
         username: newUser.username,
-        phoneNumber: newUser.phoneNumber,
         email: newUser.email,
       });
     } else {
