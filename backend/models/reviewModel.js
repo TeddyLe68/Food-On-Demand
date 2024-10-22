@@ -12,7 +12,7 @@ const ProductReviewSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    userName: {
+    username: {
       type: String,
       required: true,
       trim: true,
@@ -32,6 +32,6 @@ const ProductReviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Review = mongoose.model("Review", ProductReviewSchema);
+const ProductReview = mongoose.model("ProductReview", ProductReviewSchema);
 
-export default Review;
+export default ProductReview;
