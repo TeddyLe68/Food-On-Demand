@@ -14,15 +14,12 @@ const loginUser = async (req, res) => {
     // console.log(isPasswordCorrect);
     // check email exist or not
     if (!isPasswordCorrect || !user) {
-      return res
-        .status(400)
-        .json({ error: "Invalid email's user or password" });
+      return res.json({ message: "Invalid email or password" });
     }
     generateTokenAndSetCookie(user._id, res);
     res.status(200).json({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
+      success: true,
+      message: "You logged in successfully",
     });
   } catch (error) {
     console.log("Error in login controller", error.message);
@@ -31,24 +28,27 @@ const loginUser = async (req, res) => {
 };
 
 // register user
-const signupUser = async (req, res) => {
+const registerUser = async (req, res) => {
   try {
     const { username, password, email } = req.body;
     // check format email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: "Invalid email format" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email format" });
     }
     // check user exist or not
     const checkEmailExist = await User.findOne({ email });
     if (checkEmailExist) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Email is already taken" });
+      return res.json({
+        success: false,
+        message: "Email is already taken, please try again",
+      });
     }
     // strong password
     if (password.length < 6) {
-      return res.status(400).json({
+      return res.json({
         success: false,
         message: "Password must be at least 6 character long",
       });
@@ -61,19 +61,19 @@ const signupUser = async (req, res) => {
       email: email,
       password: hashedPassword,
     });
+    // console.log(newUser);
     if (newUser) {
       generateTokenAndSetCookie(newUser._id, res);
       await newUser.save();
       res.status(200).json({
-        _id: newUser._id,
-        username: newUser.username,
-        email: newUser.email,
+        success: true,
+        message: "You registered successfully",
       });
     } else {
       res.status(400).json({ success: false, message: "Invalid user" });
     }
   } catch (error) {
-    console.log("Erorr in sigup controller", error.message);
+    console.log("Erorr in register controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -87,4 +87,4 @@ const logoutUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-export { loginUser, signupUser, logoutUser };
+export { loginUser, registerUser, logoutUser };

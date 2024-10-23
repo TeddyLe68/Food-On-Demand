@@ -24,11 +24,10 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json()); // to parse req.body
 app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
 app.use(cookieParser());
-app.use(cors());
 
 app.use(
   cors({
-    origin: "http://localhost:5173/",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: [
       "Content-Type",
