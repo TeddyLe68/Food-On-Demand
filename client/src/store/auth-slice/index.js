@@ -73,7 +73,7 @@ export const checkAuth = createAsyncThunk(
     return response.data;
   }
 );
-
+// code to create slice and reducers for auth
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -99,7 +99,7 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
+        console.log("Login Response:", action); // <-- Log login response
 
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;

@@ -19,7 +19,13 @@ const loginUser = async (req, res) => {
     generateTokenAndSetCookie(user._id, res);
     res.status(200).json({
       success: true,
-      message: "You logged in successfully",
+      message: "Logged in successfully",
+      user: {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        id: user._id,
+      },
     });
   } catch (error) {
     console.log("Error in login controller", error.message);
@@ -87,4 +93,18 @@ const logoutUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-export { loginUser, registerUser, logoutUser };
+
+const checkAuth = async (req, res) => {
+  try {
+    const user = req.userId;
+    res.status(200).json({
+      success: true,
+      message: "Authenticated user!",
+      user,
+    });
+  } catch (error) {
+    console.log("Error in checkAuth controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+export { loginUser, registerUser, logoutUser, checkAuth };
