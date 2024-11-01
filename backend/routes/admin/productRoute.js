@@ -5,16 +5,20 @@ import {
   editPizza,
   getAllPizzas,
   getPizzaById,
-  processImageUpload,
+  handleImageUpload,
 } from "../../controllers/admin/productController.js";
-import upload from "../../services/cloudinary.js";
+import { upload } from "../../services/cloudinary.js";
 const adminProductRouter = express.Router();
 
-adminProductRouter.post("/upload", upload.single("image"), processImageUpload);
-adminProductRouter.post("/create", createPizza);
-adminProductRouter.get("/list", getAllPizzas);
-adminProductRouter.get("/:id", getPizzaById);
+adminProductRouter.post(
+  "/upload-image",
+  upload.single("image"),
+  handleImageUpload
+);
+adminProductRouter.post("/add", createPizza);
 adminProductRouter.put("/edit/:id", editPizza);
-adminProductRouter.post("/delete/:id", deletePizza);
+adminProductRouter.delete("/delete/:id", deletePizza);
+adminProductRouter.get("/get", getAllPizzas);
+adminProductRouter.get("/:id", getPizzaById);
 
 export default adminProductRouter;

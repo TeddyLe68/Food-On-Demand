@@ -14,22 +14,9 @@ const pizzaSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  toppings: {
-    type: [String], // Array of strings representing available toppings
-    required: true,
-  },
-  availability: {
-    type: Boolean,
-    default: true,
-  },
   image: { type: String, required: false },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
-    required: true,
-  },
-  totalStock: { type: Number, required: true },
-  averageRating: { type: Number, required: true },
+  category: { type: String, required: true },
+  averageRating: { type: Number, required: false },
   createdAt: {
     type: Date,
     default: Date.now,

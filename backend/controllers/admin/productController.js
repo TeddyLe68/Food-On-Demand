@@ -1,14 +1,13 @@
 import Pizza from "../../models/productModel.js";
 import { imageUpload } from "../../services/cloudinary.js";
-import Category from "../../models/categoryModel.js";
 
-const processImageUpload = async (req, res) => {
+const handleImageUpload = async (req, res) => {
   try {
     const base64 = Buffer.from(req.file.buffer).toString("base64");
-    const url = "data" + req.file.mimetype + ";base64," + base64;
+    const url = "data:" + req.file.mimetype + ";base64," + base64;
     const result = await imageUpload(url);
 
-    req.json({
+    res.json({
       success: true,
       result,
     });
@@ -125,7 +124,11 @@ const deletePizza = async (req, res) => {
     }
     res
       .status(200)
-      .json({ success: true, message: "Product deleted successfully" });
+      .json({
+        success: true,
+        message: "Product deleted successfully",
+        data: pizza,
+      });
   } catch (error) {
     console.log("Error in deletePizza controller ", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -133,7 +136,7 @@ const deletePizza = async (req, res) => {
 };
 export {
   createPizza,
-  processImageUpload,
+  handleImageUpload,
   getAllPizzas,
   getPizzaById,
   editPizza,

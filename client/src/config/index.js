@@ -38,3 +38,39 @@ export const loginFormControls = [
     type: "password",
   },
 ];
+
+export const addProductFormElements = [
+  {
+    label: "Name",
+    name: "name",
+    componentType: "input",
+    type: "text",
+    placeholder: "Enter product name",
+  },
+  {
+    label: "Description",
+    name: "description",
+    componentType: "textarea",
+    placeholder: "Enter product description",
+  },
+  {
+    label: "Category",
+    name: "category",
+    componentType: "select",
+    placeholder: "Category",
+    options: [
+      { id: "Beef", label: "Beef" },
+      { id: "Chicken", label: "Chicken" },
+      { id: "Seafood", label: "Seafood" },
+      { id: "Pork", label: "Pork" },
+      { id: "Vegetable", label: "Vegetable" },
+    ],
+  },
+  {
+    label: "Price",
+    name: "price",
+    componentType: "input",
+    type: "number",
+    placeholder: "Enter product price",
+  },
+];

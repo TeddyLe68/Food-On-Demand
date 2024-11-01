@@ -96,7 +96,8 @@ const logoutUser = async (req, res) => {
 
 const checkAuth = async (req, res) => {
   try {
-    const user = req.userId;
+    const IdUser = req.body.userId;
+    const user = await User.findById(IdUser).select("-password");
     res.status(200).json({
       success: true,
       message: "Authenticated user!",
